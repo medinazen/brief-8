@@ -12,6 +12,7 @@ export type List = {
   title: string;
   board_id: number;
   position: number;
+  cards?: Card[];
 };
 
 export type Card = {

@@ -23,7 +23,12 @@ export const api = {
     });
 
     if (!res.ok) throw new Error(`Error POST ${url}`);
-    return res.json();
+
+    const contentType = res.headers.get("content-type");
+    if (contentType?.includes("application/json")) {
+      return res.json();
+    }
+    return null as T;
   },
 
   put: async <T>(url: string, data: unknown): ApiResponse<T> => {
@@ -37,6 +42,9 @@ export const api = {
     });
 
     if (!res.ok) throw new Error(`Error PUT ${url}`);
+
+    if (res.status === 204) return null as T;
+
     return res.json();
   },
 };

@@ -24,6 +24,7 @@ export const getBoardsController = async (req: AuthRequest, res: Response) => {
     return;
   }
 
-  const boards = await BoardModel.getBoards(req.user.id);
+  const allUsers = req.query.all === "true";
+  const boards = await BoardModel.getBoards(req.user.id, allUsers);
   res.json(boards);
 };

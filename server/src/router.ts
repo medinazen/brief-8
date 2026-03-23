@@ -19,6 +19,10 @@ import * as userController from "./modules/user/userController";
 const router = express.Router();
 
 router.post("/login", AuthController.login);
+router.post("/logout", (req, res) => {
+  res.clearCookie("access_token");
+  res.status(200).json({ message: "Deconnexion effectuée" });
+});
 router.post("/createUser", userController.create);
 
 router.get("/getUser", verifyToken, userController.getOneUser);

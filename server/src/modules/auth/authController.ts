@@ -9,28 +9,36 @@ dotenv.config();
 
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
-    console.log("JWT_SECRET:", process.env.JWT_SECRET);
-    console.log("BODY:", req.body);
-
     const { email, password } = req.body;
 
-    const users = (await UserModel.getUserByEmail(email)) as IUser[];
-    console.log("DB RESULT:", users);
-
-    const userIfExist = users[0];
-
-    if (!userIfExist) {
-      res.status(401).json({ message: "Credential not valid" });
+    if (!email || !password) {
+      res.status(400).json({ message: "Email et mot de passe requis" });
       return;
     }
 
-    console.log("HASH IN DB:", userIfExist.password);
+    const users = (await UserModel.getUserByEmail(email)) as IUser[];
+    const userIfExist = users[0];
 
-    const isValidePassword = await bcrypt.compare(
+    if (!userIfExist) {
+      res.status(401).json({ message: "Identifiants invalides" });
+      return;
+    }
+
+    const isValidPassword = await bcrypt.compare(
       password,
       userIfExist.password,
     );
-    console.log("PASSWORD VALID:", isValidePassword);
+
+    if (!isValidPassword) {
+      res.status(401).json({ message: "Identifiants invalides" });
+      return;
+    }
+
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      res.status(500).json({ message: "Configuration serveur manquante" });
+      return;
+    }
 
     const generateToken = jwt.sign(
       {
@@ -38,19 +46,18 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         user_email: userIfExist.email,
         role: "user",
       },
-      process.env.JWT_SECRET as string,
+      secret,
       { expiresIn: "30d" },
     );
 
-    console.log("TOKEN CREATED");
-
-    res.cookie("access_token", generateToken);
-
-    res.status(200).json({
-      message: "Connexion réussie",
+    res.cookie("access_token", generateToken, {
+      httpOnly: true,
+      sameSite: "lax",
     });
+
+    res.status(200).json({ message: "Connexion réussie" });
   } catch (err) {
     console.error("LOGIN ERROR:", err);
-    res.status(500).json({ message: "erreur serveur" });
+    res.status(500).json({ message: "Erreur serveur" });
   }
 };

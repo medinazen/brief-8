@@ -1,15 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @layer base {
   body {
-    @apply font-sans text-slate-100;
     font-family: "Lato", sans-serif;
+    color: #f1f5f9;
   }
 
   #root {
-    @apply min-h-screen;
+    min-height: 100vh;
     background-image: url("./assets/images/background.webp");
     background-size: cover;
     background-position: top;
@@ -19,23 +17,61 @@
 
 @layer components {
   .btn-primary {
-    @apply px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-200;
+    padding: 0.5rem 1rem;
+    background-color: #2563eb;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  .btn-primary:hover {
+    background-color: #1d4ed8;
   }
 
   .btn-secondary {
-    @apply px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 font-medium rounded-lg transition-colors duration-200;
+    padding: 0.5rem 1rem;
+    background-color: #334155;
+    color: #cbd5e1;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  .btn-secondary:hover {
+    background-color: #475569;
   }
 
   .btn-danger {
-    @apply px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors duration-200;
+    padding: 0.5rem 1rem;
+    background-color: #dc2626;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  .btn-danger:hover {
+    background-color: #b91c1c;
   }
 
   .input-field {
-    @apply w-full px-4 py-2 border border-slate-600 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid #475569;
+    border-radius: 0.5rem;
+    background-color: #334155;
+    color: #fff;
+    outline: none;
+    transition: all 0.2s;
+  }
+  .input-field::placeholder {
+    color: #94a3b8;
+  }
+  .input-field:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
   }
 
   .card-gradient {
-    @apply bg-gradient-to-br from-slate-700 to-slate-800;
+    background: linear-gradient(135deg, #334155, #1e293b);
   }
 }
 

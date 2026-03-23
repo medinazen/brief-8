@@ -1,8 +1,8 @@
+import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 import { useEffect, useState } from "react";
 import { api } from "../services/fetchapi";
-import type { List, Board } from "../types/vite-env";
+import type { Board, List } from "../types/vite-env";
 import ListColumn from "./ListColumn";
-import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 
 export default function BoardView({ board }: { board: Board }) {
   const [lists, setLists] = useState<List[]>([]);

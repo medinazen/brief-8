@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../services/fetchapi";
-import type { List, Card } from "../types/vite-env";
+import type { Card, List } from "../types/vite-env";
 import CardItem from "./card";
 
 export default function ListColumn({ list }: { list: List }) {

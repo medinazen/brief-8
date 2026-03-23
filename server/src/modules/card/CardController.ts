@@ -11,11 +11,7 @@ export const createCard = async (req: Request, res: Response) => {
 export const updateCard = async (req: Request, res: Response) => {
   const { list_id, position } = req.body;
 
-  await CardModel.update(
-    Number(req.params.id),
-    list_id,
-    position
-  );
+  await CardModel.update(Number(req.params.id), list_id, position);
 
   res.sendStatus(200);
 };

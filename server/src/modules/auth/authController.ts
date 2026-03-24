@@ -24,10 +24,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const isValidPassword = await bcrypt.compare(
-      password,
-      userIfExist.password,
-    );
+    const isValidPassword = await bcrypt.compare(password, userIfExist.password);
 
     if (!isValidPassword) {
       res.status(401).json({ message: "Identifiants invalides" });
@@ -40,7 +37,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const generateToken = jwt.sign(
+    const token = jwt.sign(
       {
         user_id: userIfExist.id,
         user_email: userIfExist.email,
@@ -50,9 +47,12 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       { expiresIn: "30d" },
     );
 
-    res.cookie("access_token", generateToken, {
+    const isProduction = process.env.NODE_ENV === "production";
+
+    res.cookie("access_token", token, {
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: isProduction ? "none" : "lax",
+      secure: isProduction,
     });
 
     res.status(200).json({ message: "Connexion réussie" });

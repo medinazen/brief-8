@@ -46,7 +46,10 @@ export default function App() {
   }, [coworking]);
 
   useEffect(() => {
-    const init = async () => { await fetchUser(); setReady(true); };
+    const init = async () => {
+      await fetchUser();
+      setReady(true);
+    };
     init();
   }, [fetchUser]);
 
@@ -62,7 +65,9 @@ export default function App() {
   };
 
   const handleLogout = async () => {
-    try { await api.post("/logout", {}); } catch {}
+    try {
+      await api.post("/logout", {});
+    } catch {}
     setCurrentUser(null);
     setBoards([]);
     setSelectedBoard(null);
@@ -88,13 +93,13 @@ export default function App() {
     const f = new FormData(e.currentTarget);
     try {
       await api.post("/createUser", {
-        email:     f.get("email")?.toString() ?? "",
+        email: f.get("email")?.toString() ?? "",
         firstname: f.get("firstname")?.toString() ?? "",
-        lastname:  f.get("lastname")?.toString() ?? "",
-        password:  f.get("password")?.toString() ?? "",
+        lastname: f.get("lastname")?.toString() ?? "",
+        password: f.get("password")?.toString() ?? "",
       });
       await api.post("/login", {
-        email:    f.get("email")?.toString() ?? "",
+        email: f.get("email")?.toString() ?? "",
         password: f.get("password")?.toString() ?? "",
       });
       await fetchUser();
@@ -127,14 +132,20 @@ export default function App() {
             <button
               type="button"
               className={`auth-tab${authMode === "login" ? " active" : ""}`}
-              onClick={() => { setAuthMode("login"); setAuthError(null); }}
+              onClick={() => {
+                setAuthMode("login");
+                setAuthError(null);
+              }}
             >
               Connexion
             </button>
             <button
               type="button"
               className={`auth-tab${authMode === "register" ? " active" : ""}`}
-              onClick={() => { setAuthMode("register"); setAuthError(null); }}
+              onClick={() => {
+                setAuthMode("register");
+                setAuthError(null);
+              }}
             >
               Inscription
             </button>
@@ -145,36 +156,94 @@ export default function App() {
           {authMode === "login" ? (
             <form onSubmit={handleLogin}>
               <div className="form-group">
-                <label htmlFor="login-email" className="form-label">Email</label>
-                <input id="login-email" name="email" type="email" placeholder="vous@exemple.com" required className="form-input" />
+                <label htmlFor="login-email" className="form-label">
+                  Email
+                </label>
+                <input
+                  id="login-email"
+                  name="email"
+                  type="email"
+                  placeholder="vous@exemple.com"
+                  required
+                  className="form-input"
+                />
               </div>
               <div className="form-group">
-                <label htmlFor="login-password" className="form-label">Mot de passe</label>
-                <input id="login-password" name="password" type="password" placeholder="••••••••" required className="form-input" />
+                <label htmlFor="login-password" className="form-label">
+                  Mot de passe
+                </label>
+                <input
+                  id="login-password"
+                  name="password"
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                  className="form-input"
+                />
               </div>
-              <button type="submit" className="btn-submit">Se connecter →</button>
+              <button type="submit" className="btn-submit">
+                Se connecter →
+              </button>
             </form>
           ) : (
             <form onSubmit={handleRegister}>
               <div className="form-group">
-                <label htmlFor="reg-email" className="form-label">Email</label>
-                <input id="reg-email" name="email" type="email" placeholder="vous@exemple.com" required className="form-input" />
+                <label htmlFor="reg-email" className="form-label">
+                  Email
+                </label>
+                <input
+                  id="reg-email"
+                  name="email"
+                  type="email"
+                  placeholder="vous@exemple.com"
+                  required
+                  className="form-input"
+                />
               </div>
               <div className="form-row">
                 <div className="form-group">
-                  <label htmlFor="reg-firstname" className="form-label">Prénom</label>
-                  <input id="reg-firstname" name="firstname" type="text" placeholder="Jean" required className="form-input" />
+                  <label htmlFor="reg-firstname" className="form-label">
+                    Prénom
+                  </label>
+                  <input
+                    id="reg-firstname"
+                    name="firstname"
+                    type="text"
+                    placeholder="Jean"
+                    required
+                    className="form-input"
+                  />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="reg-lastname" className="form-label">Nom</label>
-                  <input id="reg-lastname" name="lastname" type="text" placeholder="Dupont" required className="form-input" />
+                  <label htmlFor="reg-lastname" className="form-label">
+                    Nom
+                  </label>
+                  <input
+                    id="reg-lastname"
+                    name="lastname"
+                    type="text"
+                    placeholder="Dupont"
+                    required
+                    className="form-input"
+                  />
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="reg-password" className="form-label">Mot de passe</label>
-                <input id="reg-password" name="password" type="password" placeholder="••••••••" required className="form-input" />
+                <label htmlFor="reg-password" className="form-label">
+                  Mot de passe
+                </label>
+                <input
+                  id="reg-password"
+                  name="password"
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                  className="form-input"
+                />
               </div>
-              <button type="submit" className="btn-submit">Créer mon compte →</button>
+              <button type="submit" className="btn-submit">
+                Créer mon compte →
+              </button>
             </form>
           )}
         </div>
@@ -186,10 +255,14 @@ export default function App() {
     <div className="app-content">
       <header className="app-header">
         <div className="app-header-inner">
-          <span className="app-logo">📋 Trello <em>Clone</em></span>
+          <span className="app-logo">
+            📋 Trello <em>Clone</em>
+          </span>
 
           <div className="user-badge">
-            <strong>{currentUser.firstname} {currentUser.lastname}</strong>
+            <strong>
+              {currentUser.firstname} {currentUser.lastname}
+            </strong>
           </div>
 
           <button
@@ -200,11 +273,19 @@ export default function App() {
             {coworking ? "Tous les boards" : "Mes boards"}
           </button>
 
-          <button type="button" onClick={createBoard} className="btn-header new-board">
+          <button
+            type="button"
+            onClick={createBoard}
+            className="btn-header new-board"
+          >
             + Nouveau board
           </button>
 
-          <button type="button" onClick={handleLogout} className="btn-header logout">
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="btn-header logout"
+          >
             Déconnexion
           </button>
         </div>
@@ -233,7 +314,9 @@ export default function App() {
       ) : (
         <div className="empty-state">
           <p className="empty-state-title">Aucun board pour l'instant</p>
-          <p className="empty-state-sub">Créez votre premier board pour commencer</p>
+          <p className="empty-state-sub">
+            Créez votre premier board pour commencer
+          </p>
         </div>
       )}
     </div>

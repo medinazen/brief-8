@@ -12,16 +12,23 @@ export default function BoardView({ board }: { board: Board }) {
     const listsWithCards = await Promise.all(
       listsData.map(async (list) => {
         const cards = await api.get<Card[]>(`/cards/${list.id}`);
-        return { ...list, cards: cards.sort((a, b) => a.position - b.position) };
+        return {
+          ...list,
+          cards: cards.sort((a, b) => a.position - b.position),
+        };
       }),
     );
     setLists(listsWithCards.sort((a, b) => a.position - b.position));
   }, [board.id]);
 
-  useEffect(() => { fetchLists(); }, [fetchLists]);
+  useEffect(() => {
+    fetchLists();
+  }, [fetchLists]);
 
   const getNextPositionForList = () =>
-    lists.length === 0 ? 1000 : Math.max(...lists.map((l) => l.position)) + 1000;
+    lists.length === 0
+      ? 1000
+      : Math.max(...lists.map((l) => l.position)) + 1000;
 
   const getNextPositionForCards = (listId: number) => {
     const target = lists.find((l) => l.id === listId);
@@ -42,25 +49,38 @@ export default function BoardView({ board }: { board: Board }) {
       targetListId = Number(overId.replace("list-", ""));
     } else if (overId.startsWith("card-")) {
       const overCardId = Number(overId.replace("card-", ""));
-      targetListId = lists.find((l) => l.cards?.some((c) => c.id === overCardId))?.id ?? null;
+      targetListId =
+        lists.find((l) => l.cards?.some((c) => c.id === overCardId))?.id ??
+        null;
     }
 
     if (!targetListId) return;
-    await api.put(`/cards/${cardId}`, { list_id: targetListId, position: getNextPositionForCards(targetListId) });
+    await api.put(`/cards/${cardId}`, {
+      list_id: targetListId,
+      position: getNextPositionForCards(targetListId),
+    });
     await fetchLists();
   };
 
   const addList = async () => {
     const title = prompt("Nom de la liste ?");
     if (!title) return;
-    await api.post("/lists", { title, board_id: board.id, position: getNextPositionForList() });
+    await api.post("/lists", {
+      title,
+      board_id: board.id,
+      position: getNextPositionForList(),
+    });
     await fetchLists();
   };
 
   const addCard = async (listId: number) => {
     const title = prompt("Nom de la carte ?");
     if (!title) return;
-    await api.post("/cards", { title, list_id: listId, position: getNextPositionForCards(listId) });
+    await api.post("/cards", {
+      title,
+      list_id: listId,
+      position: getNextPositionForCards(listId),
+    });
     await fetchLists();
   };
 
@@ -73,7 +93,12 @@ export default function BoardView({ board }: { board: Board }) {
     <DndContext onDragEnd={handleDragEnd}>
       <div className="board-view">
         {lists.map((list) => (
-          <ListColumn key={list.id} list={list} onAddCard={addCard} onCardUpdate={updateCard} />
+          <ListColumn
+            key={list.id}
+            list={list}
+            onAddCard={addCard}
+            onCardUpdate={updateCard}
+          />
         ))}
         <button type="button" onClick={addList} className="btn-add-list">
           <span className="plus-icon">+</span>

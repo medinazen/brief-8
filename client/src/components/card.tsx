@@ -7,12 +7,15 @@ type CardItemProps = {
 };
 
 export default function CardItem({ card, onUpdate }: CardItemProps) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
-    id: `card-${card.id}`,
-  });
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({
+      id: `card-${card.id}`,
+    });
 
   const style = {
-    transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
+    transform: transform
+      ? `translate(${transform.x}px, ${transform.y}px)`
+      : undefined,
   };
 
   const handleEdit = async () => {

@@ -24,7 +24,10 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const isValidPassword = await bcrypt.compare(password, userIfExist.password);
+    const isValidPassword = await bcrypt.compare(
+      password,
+      userIfExist.password,
+    );
 
     if (!isValidPassword) {
       res.status(401).json({ message: "Identifiants invalides" });

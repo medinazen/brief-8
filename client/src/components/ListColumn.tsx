@@ -8,11 +8,18 @@ type ListColumnProps = {
   onCardUpdate: (cardId: number, title: string) => Promise<void>;
 };
 
-export default function ListColumn({ list, onAddCard, onCardUpdate }: ListColumnProps) {
+export default function ListColumn({
+  list,
+  onAddCard,
+  onCardUpdate,
+}: ListColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id: `list-${list.id}` });
 
   return (
-    <div ref={setNodeRef} className={`list-column${isOver ? " drag-over" : ""}`}>
+    <div
+      ref={setNodeRef}
+      className={`list-column${isOver ? " drag-over" : ""}`}
+    >
       <div className="list-header">
         <h3 className="list-title">{list.title}</h3>
         <div className="list-accent-bar" />
@@ -24,7 +31,11 @@ export default function ListColumn({ list, onAddCard, onCardUpdate }: ListColumn
         ))}
       </div>
 
-      <button type="button" onClick={() => onAddCard(list.id)} className="btn-add-card">
+      <button
+        type="button"
+        onClick={() => onAddCard(list.id)}
+        className="btn-add-card"
+      >
         <span>＋</span>
         <span>Ajouter une carte</span>
       </button>

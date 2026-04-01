@@ -33,7 +33,7 @@ afterEach(() => {
 });
 
 describe("userController - getAllUser()", () => {
-  it("doit retourner la liste de tout les utlisateurs avec status 200", async () => {
+  it("doit retourner la liste de tout les utlisateurs avec statu 200", async () => {
     const fakeUsers: UserRow[] = [
       {
         id: 1,
@@ -106,7 +106,7 @@ describe("userController - create()", () => {
 
   it("doit créer un utilisateur et retourner 201 si tout est ok", async () => {
     mockedGetUserByEmail.mockResolvedValueOnce([] as RowDataPacket[]);
-    mockedHash.mockResolvedValueOnce("hashedpassword123" as never);
+    mockedHash.mockResolvedValueOnce("hashedpassword123" as never); // castassion c'est pas moi je sais a quoi ca sert de le mettre a never mais e moins
     mockedCreateUser.mockResolvedValueOnce({
       insertId: 42,
       affectedRows: 1,

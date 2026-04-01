@@ -19,6 +19,7 @@ const mockedCreateList = jest.mocked(ListModel.createList);
 const mockedGetListsByBoard = jest.mocked(ListModel.getListsByBoard);
 
 const mockResponse = () => {
+  //la réponse que l'on vas donner pour éviter les erreurs de type "server" (500)
   const res = {} as Response;
   res.status = jest.fn().mockReturnValue(res);
   res.json = jest.fn().mockReturnValue(res);
@@ -55,14 +56,12 @@ describe("listController - getListsByBoardController()", () => {
         title: "Todo",
         board_id: 3,
         position: 0,
-        constructor: { name: "RowDataPacket" },
       } as ListRow,
       {
         id: 2,
         title: "En cours",
         board_id: 3,
         position: 1000,
-        constructor: { name: "RowDataPacket" },
       } as ListRow,
     ];
     mockedGetListsByBoard.mockResolvedValueOnce(fakeLists as RowDataPacket[]);

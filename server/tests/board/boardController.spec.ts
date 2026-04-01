@@ -95,13 +95,11 @@ describe("boardController - getBoardsController()", () => {
         id: 1,
         title: "Board A",
         user_id: 1,
-        constructor: { name: "RowDataPacket" },
       } as BoardRow,
       {
         id: 2,
         title: "Board B",
         user_id: 1,
-        constructor: { name: "RowDataPacket" },
       } as BoardRow,
     ];
     mockedGetBoards.mockResolvedValueOnce(fakeBoards as RowDataPacket[]);

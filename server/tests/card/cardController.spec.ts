@@ -146,7 +146,6 @@ describe("cardController - getCardsByList()", () => {
         list_id: 3,
         position: 1000,
         description: "",
-        constructor: { name: "RowDataPacket" },
       } as CardRow,
       {
         id: 2,
@@ -154,7 +153,6 @@ describe("cardController - getCardsByList()", () => {
         list_id: 3,
         position: 2000,
         description: "desc",
-        constructor: { name: "RowDataPacket" },
       } as CardRow,
     ];
     mockedGetByList.mockResolvedValueOnce(fakeCards as RowDataPacket[]);

@@ -4,8 +4,8 @@ import {
   createCard,
   getCardsByList,
   updateCard,
-} from "../../../src/modules/card/CardController";
-import * as CardModel from "../../../src/modules/card/cardModel";
+} from "../../src/modules/card/CardController";
+import * as CardModel from "../../src/modules/card/cardModel";
 
 jest.mock("../../../src/modules/card/cardModel");
 

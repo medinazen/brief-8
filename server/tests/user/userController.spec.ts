@@ -47,7 +47,7 @@ describe("userController - getAllUser()", () => {
         email: "b@test.com",
         firstname: "Bob",
         lastname: "D",
-        password: "h",   
+        password: "h",
       } as UserRow,
     ];
     mockedGetAll.mockResolvedValueOnce(fakeUsers as RowDataPacket[]);
@@ -82,7 +82,6 @@ describe("userController - create()", () => {
       firstname: "Jean",
       lastname: "D",
       password: "hashed",
-      
     } as UserRow;
 
     mockedGetUserByEmail.mockResolvedValueOnce([

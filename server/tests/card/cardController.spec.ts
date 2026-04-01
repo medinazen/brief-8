@@ -7,7 +7,7 @@ import {
 } from "../../src/modules/card/CardController";
 import * as CardModel from "../../src/modules/card/cardModel";
 
-jest.mock("../../../src/modules/card/cardModel");
+jest.mock("../../src/modules/card/cardModel");
 
 type CardRow = RowDataPacket & {
   id: number;

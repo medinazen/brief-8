@@ -10,7 +10,7 @@ jest.mock("../../src/modules/user/userModel");
 jest.mock("bcrypt");
 jest.mock("jsonwebtoken");
 
-type UserRow = RowDataPacket & {
+type UserRow = {
   id: number;
   email: string;
   firstname: string;
@@ -71,7 +71,6 @@ describe("authController - login()", () => {
       firstname: "Jean",
       lastname: "Dupont",
       password: "hashedpassword",
-      constructor: { name: "RowDataPacket" },
     } as UserRow;
 
     mockedGetUserByEmail.mockResolvedValueOnce([fakeUser] as RowDataPacket[]);
@@ -98,7 +97,6 @@ describe("authController - login()", () => {
       firstname: "Jean",
       lastname: "Dupont",
       password: "hashedpassword",
-      constructor: { name: "RowDataPacket" },
     } as UserRow;
 
     mockedGetUserByEmail.mockResolvedValueOnce([fakeUser] as RowDataPacket[]);
@@ -130,7 +128,6 @@ describe("authController - login()", () => {
       firstname: "Jean",
       lastname: "Dupont",
       password: "hashedpassword",
-      constructor: { name: "RowDataPacket" },
     } as UserRow;
 
     mockedGetUserByEmail.mockResolvedValueOnce([fakeUser] as RowDataPacket[]);

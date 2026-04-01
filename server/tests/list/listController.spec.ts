@@ -6,7 +6,7 @@ import {
 } from "../../src/modules/list/listController";
 import * as ListModel from "../../src/modules/list/listModel";
 
-jest.mock("../../../src/modules/list/listModel");
+jest.mock("../../src/modules/list/listModel");
 
 type ListRow = RowDataPacket & {
   id: number;

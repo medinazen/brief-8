@@ -7,7 +7,7 @@ import * as UserModel from "../../src/modules/user/userModel";
 jest.mock("../../src/modules/user/userModel");
 jest.mock("bcrypt");
 
-type UserRow = RowDataPacket & {
+type UserRow = {
   id: number;
   email: string;
   firstname: string;
@@ -41,15 +41,13 @@ describe("userController - getAllUser()", () => {
         firstname: "Alice",
         lastname: "M",
         password: "h",
-        constructor: { name: "RowDataPacket" },
       } as UserRow,
       {
         id: 2,
         email: "b@test.com",
         firstname: "Bob",
         lastname: "D",
-        password: "h",
-        constructor: { name: "RowDataPacket" },
+        password: "h",   
       } as UserRow,
     ];
     mockedGetAll.mockResolvedValueOnce(fakeUsers as RowDataPacket[]);
@@ -84,7 +82,7 @@ describe("userController - create()", () => {
       firstname: "Jean",
       lastname: "D",
       password: "hashed",
-      constructor: { name: "RowDataPacket" },
+      
     } as UserRow;
 
     mockedGetUserByEmail.mockResolvedValueOnce([

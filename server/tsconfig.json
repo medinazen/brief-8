@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
+    
 
     /* Projects */
     // "incremental": true,                              /* Save .tsbuildinfo files to allow for incremental compilation of projects. */
@@ -104,6 +105,17 @@
 
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
-  }
+    "skipLibCheck": true,                            /* Skip type checking all .d.ts files. */
+    "types": ["node", "jest"]
+  },"exclude": ["node_modules", "cypress", "./cypress.config.ts",
+  //other exclusions that may help https://github.com/cypress-io/cypress/issues/22059#issuecomment-1428298264
+  "node_modules",
+  "cypress",
+  "**/*.cy.tsx"
+  
+  //other exclusions that may help https://github.com/cypress-io/cypress/issues/22059#issuecomment-1428298264
+  ]
 }
+ 
+  
+

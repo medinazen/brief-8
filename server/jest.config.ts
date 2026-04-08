@@ -4,10 +4,10 @@ const config: Config = {
   preset: "ts-jest",
   testEnvironment: "node",
 
-  testMatch: ["**/tests/**/*.spec.ts", ],
+  testMatch: ["**/tests/**/*.spec.ts"],
 
   clearMocks: true,
-  
+
   collectCoverageFrom: [
     "src/modules/**/*.ts",
     "src/middleware/**/*.ts",

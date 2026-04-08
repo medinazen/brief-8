@@ -1,3 +1,4 @@
+import { afterEach, describe, expect, it, jest } from "@jest/globals";
 import type { Request, Response } from "express";
 import type { ResultSetHeader, RowDataPacket } from "mysql2";
 import {
@@ -5,7 +6,6 @@ import {
   getListsByBoardController,
 } from "../../src/modules/list/listController";
 import * as ListModel from "../../src/modules/list/listModel";
-
 jest.mock("../../src/modules/list/listModel");
 
 type ListRow = RowDataPacket & {
@@ -21,8 +21,8 @@ const mockedGetListsByBoard = jest.mocked(ListModel.getListsByBoard);
 const mockResponse = () => {
   //la réponse que l'on vas donner pour éviter les erreurs de type "server" (500)
   const res = {} as Response;
-  res.status = jest.fn().mockReturnValue(res);
-  res.json = jest.fn().mockReturnValue(res);
+  res.status = jest.fn<(code: number) => Response>().mockReturnValue(res);
+  res.json = jest.fn<(data: unknown) => Response>().mockReturnValue(res);
   return res;
 };
 

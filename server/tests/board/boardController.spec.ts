@@ -1,3 +1,4 @@
+import { afterEach, describe, expect, it, jest } from "@jest/globals";
 import type { Response } from "express";
 import type { ResultSetHeader, RowDataPacket } from "mysql2";
 import type { AuthRequest } from "../../src/middleware/verifyToken";
@@ -20,8 +21,12 @@ const mockedGetBoards = jest.mocked(BoardModel.getBoards);
 
 const mockResponse = () => {
   const res = {} as Response;
-  res.status = jest.fn().mockReturnValue(res);
-  res.json = jest.fn().mockReturnValue(res);
+  res.status = jest.fn().mockReturnValue(res) as unknown as (
+    code: number,
+  ) => Response;
+  res.json = jest.fn().mockReturnValue(res) as unknown as (
+    body: object,
+  ) => Response;
   return res;
 };
 

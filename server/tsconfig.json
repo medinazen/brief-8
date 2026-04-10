@@ -107,15 +107,12 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true,                            /* Skip type checking all .d.ts files. */
     "types": ["node", "jest"]
-  },"exclude": ["node_modules", "cypress", "./cypress.config.ts",
-  //other exclusions that may help https://github.com/cypress-io/cypress/issues/22059#issuecomment-1428298264
-  "node_modules",
-  "cypress",
+  },"exclude": ["node_modules", "../client/cypress", "./cypress.config.ts",
   "**/*.cy.tsx"
-  
-  //other exclusions that may help https://github.com/cypress-io/cypress/issues/22059#issuecomment-1428298264
   ]
 }
  
+
+
   
 

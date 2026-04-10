@@ -19,3 +19,9 @@ export const createUser = async (user: IUser) => {
   );
   return result;
 };
+export const deleteUserByEmail = async (email: string) => {
+  const [result] = await db.execute("DELETE FROM user WHERE email = ?", [
+    email,
+  ]);
+  return result;
+};

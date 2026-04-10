@@ -24,6 +24,7 @@ router.post("/logout", (req, res) => {
   res.status(200).json({ message: "Deconnexion effectuée" });
 });
 router.post("/createUser", userController.create);
+router.delete("/deleteUser", userController.deleteByEmail);
 
 router.get("/getUser", verifyToken, userController.getOneUser);
 router.get("/getAll", userController.getAllUser);

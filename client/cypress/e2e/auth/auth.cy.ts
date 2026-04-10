@@ -26,11 +26,18 @@ describe("Flux Inscription / Connexion", () => {
     });
 
     it("doit afficher une érreur si l'email est déja utlisé", () => {
-      cy.request("POST", "/api/createUser", {
-        email: "doublon@test.com",
-        firstname: "Paul",
-        lastname: "Martin",
-        password: "pass123",
+      cy.request({
+        method: "DELETE",
+        url: `${Cypress.env("apiUrl")}/api/deleteUser`,
+        failOnStatusCode: false,
+        body: { email: "doublon@test.com" },
+      }).then(() => {
+        cy.request("POST", `${Cypress.env("apiUrl")}/api/createUser`, {
+          email: "doublon@test.com",
+          firstname: "Paul",
+          lastname: "Martin",
+          password: "pass123",
+        });
       });
 
       cy.contains("Inscription").click();
@@ -57,11 +64,18 @@ describe("Flux Inscription / Connexion", () => {
 
   describe("Connexion", () => {
     beforeEach(() => {
-      cy.request("POST", "/api/createUser", {
-        email: "existant@test.com",
-        firstname: "Alice",
-        lastname: "Martin",
-        password: "bonpassword",
+      cy.request({
+        method: "DELETE",
+        url: `${Cypress.env("apiUrl")}/api/deleteUser`,
+        failOnStatusCode: false,
+        body: { email: "existant@test.com" },
+      }).then(() => {
+        cy.request("POST", `${Cypress.env("apiUrl")}/api/createUser`, {
+          email: "existant@test.com",
+          firstname: "Alice",
+          lastname: "Martin",
+          password: "bonpassword",
+        });
       });
     });
 
@@ -98,16 +112,23 @@ describe("Flux Inscription / Connexion", () => {
 
   describe("Déconnexion", () => {
     beforeEach(() => {
-      cy.request("POST", "/api/createUser", {
-        email: "logout@test.com",
-        firstname: "Bob",
-        lastname: "Logout",
-        password: "passtest",
+      cy.request({
+        method: "DELETE",
+        url: `${Cypress.env("apiUrl")}/api/deleteUser`,
+        failOnStatusCode: false,
+        body: { email: "logout@test.com" },
       }).then(() => {
-        cy.get("input[name='email']").type("logout@test.com");
-        cy.get("input[name='password']").type("passtest");
-        cy.get("button[type='submit']").click();
-        cy.contains("Bob Logout").should("be.visible");
+        cy.request("POST", `${Cypress.env("apiUrl")}/api/createUser`, {
+          email: "logout@test.com",
+          firstname: "Bob",
+          lastname: "Logout",
+          password: "passtest",
+        }).then(() => {
+          cy.get("input[name='email']").type("logout@test.com");
+          cy.get("input[name='password']").type("passtest");
+          cy.get("button[type='submit']").click();
+          cy.contains("Bob Logout").should("be.visible");
+        });
       });
     });
 

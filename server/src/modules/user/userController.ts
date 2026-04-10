@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import type { Request, Response } from "express";
 import type { ResultSetHeader } from "mysql2";
+import pool from "../../../database/client.ts";
 import type { AuthRequest } from "../../middleware/verifyToken.ts";
 import * as UserModel from "./userModel.ts";
 
@@ -65,6 +66,17 @@ export const create = async (req: Request, res: Response): Promise<void> => {
     }
   } catch (error) {
     console.error(error);
+    res.status(500).send(`error: ${error}`);
+  }
+};
+export const deleteByEmail = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    await UserModel.deleteUserByEmail(req.body.email);
+    res.status(200).json({ message: "Utilisateur supprimé" });
+  } catch (error) {
     res.status(500).send(`error: ${error}`);
   }
 };

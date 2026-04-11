@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 describe("Flux Inscription / Connexion", () => {
   beforeEach(() => {
     cy.visit("/");

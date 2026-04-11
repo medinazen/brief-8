@@ -6,6 +6,8 @@ import ListColumn from "./ListColumn";
 
 export default function BoardView({ board }: { board: Board }) {
   const [lists, setLists] = useState<List[]>([]);
+  const [newListTitle, setNewListTitle] = useState("");
+  const [showListInput, setShowListInput] = useState(false);
 
   const fetchLists = useCallback(async () => {
     const listsData = await api.get<List[]>(`/lists/${board.id}`);
@@ -62,22 +64,22 @@ export default function BoardView({ board }: { board: Board }) {
     await fetchLists();
   };
 
-  const addList = async () => {
-    const title = prompt("Nom de la liste ?");
-    if (!title) return;
+  const handleAddList = async () => {
+    if (!newListTitle.trim()) return;
     await api.post("/lists", {
-      title,
+      title: newListTitle.trim(),
       board_id: board.id,
       position: getNextPositionForList(),
     });
+    setNewListTitle("");
+    setShowListInput(false);
     await fetchLists();
   };
 
-  const addCard = async (listId: number) => {
-    const title = prompt("Nom de la carte ?");
-    if (!title) return;
+  const addCard = async (listId: number, title: string) => {
+    if (!title.trim()) return;
     await api.post("/cards", {
-      title,
+      title: title.trim(),
       list_id: listId,
       position: getNextPositionForCards(listId),
     });
@@ -100,10 +102,49 @@ export default function BoardView({ board }: { board: Board }) {
             onCardUpdate={updateCard}
           />
         ))}
-        <button type="button" onClick={addList} className="btn-add-list">
-          <span className="plus-icon">+</span>
-          <span>Ajouter une liste</span>
-        </button>
+
+        <div className="add-list-container">
+          {showListInput ? (
+            <div className="add-list-form">
+              <input
+                type="text"
+                className="add-list-input"
+                placeholder="Nom de la liste"
+                value={newListTitle}
+                onChange={(e) => setNewListTitle(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleAddList()}
+              />
+              <div className="add-list-actions">
+                <button
+                  type="button"
+                  onClick={handleAddList}
+                  className="btn-confirm"
+                >
+                  Ajouter
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowListInput(false);
+                    setNewListTitle("");
+                  }}
+                  className="btn-cancel"
+                >
+                  Annuler
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowListInput(true)}
+              className="btn-add-list"
+            >
+              <span className="plus-icon">+</span>
+              <span>Ajouter une liste</span>
+            </button>
+          )}
+        </div>
       </div>
     </DndContext>
   );

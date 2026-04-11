@@ -19,6 +19,8 @@ export default function App() {
   const [authError, setAuthError] = useState<string | null>(null);
   const [coworking, setCoworking] = useState(false);
   const [ready, setReady] = useState(false);
+  const [showBoardInput, setShowBoardInput] = useState(false);
+  const [newBoardTitle, setNewBoardTitle] = useState("");
 
   const fetchUser = useCallback(async () => {
     try {
@@ -57,10 +59,11 @@ export default function App() {
     if (currentUser) fetchBoards();
   }, [currentUser, fetchBoards]);
 
-  const createBoard = async () => {
-    const title = prompt("Nom du board ?");
-    if (!title) return;
-    await api.post("/boards", { title });
+  const handleCreateBoard = async () => {
+    if (!newBoardTitle.trim()) return;
+    await api.post("/boards", { title: newBoardTitle.trim() });
+    setNewBoardTitle("");
+    setShowBoardInput(false);
     await fetchBoards();
   };
 
@@ -273,13 +276,43 @@ export default function App() {
             {coworking ? "Tous les boards" : "Mes boards"}
           </button>
 
-          <button
-            type="button"
-            onClick={createBoard}
-            className="btn-header new-board"
-          >
-            + Nouveau board
-          </button>
+          {showBoardInput ? (
+            <div className="new-board-form">
+              <input
+                type="text"
+                className="new-board-input form-input"
+                placeholder="Nom du board"
+                value={newBoardTitle}
+                onChange={(e) => setNewBoardTitle(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleCreateBoard()}
+              />
+              <button
+                type="button"
+                onClick={handleCreateBoard}
+                className="btn-header new-board"
+              >
+                Créer
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowBoardInput(false);
+                  setNewBoardTitle("");
+                }}
+                className="btn-header"
+              >
+                Annuler
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowBoardInput(true)}
+              className="btn-header new-board"
+            >
+              + Nouveau board
+            </button>
+          )}
 
           <button
             type="button"
